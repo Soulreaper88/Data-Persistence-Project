@@ -21,7 +21,7 @@ public class MenuUIHandler : MonoBehaviour
     }
     public void NewNameSelected()
     {
-         nome.text = DataManager.instance.nameEnter;
+         DataManager.instance.nameEnter = nome.text;
     }
     public void Startnew()
     {

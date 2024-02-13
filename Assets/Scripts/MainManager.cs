@@ -2,8 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using TMPro;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UI;
 
 public class MainManager : MonoBehaviour
@@ -18,7 +20,7 @@ public class MainManager : MonoBehaviour
     
     private bool m_Started = false;
     private int m_Points;
-    
+    private int bestScore = DataManager.instance.bestScore;
     private bool m_GameOver = false;
 
    
@@ -27,8 +29,7 @@ public class MainManager : MonoBehaviour
     {
         const float step = 0.6f;
         int perLine = Mathf.FloorToInt(4.0f / step);
-       
-        
+        AddBestScore();
         int[] pointCountArray = new [] {1,1,2,2,5,5};
         for (int i = 0; i < LineCount; ++i)
         {
@@ -63,24 +64,33 @@ public class MainManager : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+                DataManager.instance.LoadBestScore();
             }
         }
-    }
+        if (m_Points >= bestScore)
+        {
+            bestScore = m_Points;
+            DataManager.instance.bestNameEnter = DataManager.instance.nameEnter;
+            DataManager.instance.bestScore = bestScore; 
+            DataManager.instance.SaveBestScore();
+            AddBestScore();
+           
+        }
+    } 
 
+    void AddBestScore()
+    {
+        string nome = DataManager.instance.bestNameEnter;
+        int score = DataManager.instance.bestScore;
+        bestSCoreText.text = $"Best Score : " + nome + score;
+    }
     void AddPoint(int point)
     {
         m_Points += point;
         string nome = DataManager.instance.nameEnter;
         ScoreText.text = $"Score : {nome} {m_Points}";
-        point = DataManager.instance.score;
-       
     }
-    void AddBestScore(int score)
-    {
-            string nome = DataManager.instance.nameEnter;
-            score = DataManager.instance.bestScore;
-            bestSCoreText.text = $"Best Score : " + nome + score;
-    }
+   
     
 
     public void GameOver()
