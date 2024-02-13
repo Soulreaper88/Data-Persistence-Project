@@ -33,6 +33,7 @@ public class DataManager : MonoBehaviour
         public string bestName;
         public int bestScore;
     }
+    //  Save/Load the BestScore with name and points
     public void SaveBestScore()
     {
         SaveData data = new SaveData();
@@ -54,6 +55,7 @@ public class DataManager : MonoBehaviour
             bestNameEnter = data.bestName;
         }
     }
+    //  Save/Load the input name at menu
     public void SaveName()
     {
         SaveData data = new SaveData();

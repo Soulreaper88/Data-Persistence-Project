@@ -28,7 +28,11 @@ public class MenuUIHandler : MonoBehaviour
         DataManager.instance.SaveName();
         SceneManager.LoadScene(1);
     }
-
+    public void ResetScore()
+    {
+        DataManager.instance.bestNameEnter = null;
+        DataManager.instance.bestScore = 0;
+    }
     public void Exit()
     {
        
